@@ -15,10 +15,33 @@
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
 
+Person.prototype.eat = function(edible){
+  if(this.stomach.length < 10){
+    this.stomach.push(edible);
+  }
+}
+
+Person.prototype.poop = function(){
+  this.stomach = [];
+}
+
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`;
+}
+
+const mary = new Person('Mary', 50);
+
+console.log('Task 1', mary.toString());
+mary.eat('Burgers');
+console.log(mary.stomach);
+mary.poop();
+console.log(mary.stomach);
 
 /*
   TASK 2
@@ -36,9 +59,16 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-
+function Car(model, mpg) {
+this.model = model;
+this.milesPerGallon = mpg;
+this.tank = 0;
+this.odometer = 0;
 }
+Car.prototype.fill = function(gallons){
+  this.tank = this.tank + gallons;
+}
+console.log('Task 2');
 
 
 /*
@@ -49,18 +79,23 @@ function Car() {
         + Should return a string "Playing with x", x being the favorite toy.
 */
 
-function Baby() {
-
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
 }
-
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
+console.log('Task 3');
 
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Window Biniding is when the other rules don't apply
+  2. Implicate Biniding is whats to the left of the dot is invoked thats what "this" is refered to
+  3. Explicit Biniding . call .bind .apply
+  4. New Binding is when a new functiion is created as a new const "this" points to the new object
 */
 
 ///////// END OF CHALLENGE /////////
